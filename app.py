@@ -6,6 +6,10 @@ app = Flask(__name__)
 students = []
 student_id_counter = 1
 
+@app.route('/')
+def hello():
+    return "Welcome to the Students API!"
+
 
 # ✅ CREATE Student
 @app.route('/students', methods=['POST'])
