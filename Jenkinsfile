@@ -1,12 +1,7 @@
 pipeline {
     agent any
 
-    environment {
-        VENV = "venv"
-    }
-
     stages {
-
         stage('Checkout Code') {
             steps {
                 echo 'Cloning GitHub repository...'
@@ -17,30 +12,28 @@ pipeline {
         stage('Setup Virtual Environment') {
             steps {
                 echo 'Creating virtual environment...'
-                sh '''
-                python -m venv venv
-                '''
+                bat 'python -m venv venv'
             }
         }
 
         stage('Install Dependencies') {
             steps {
                 echo 'Installing dependencies...'
-                sh '''
-                . venv/bin/activate
+                bat """
+                venv\\Scripts\\activate
                 pip install --upgrade pip
                 pip install -r requirements.txt
-                '''
+                """
             }
         }
 
         stage('Run Tests') {
             steps {
-                echo 'Running pytest...'
-                sh '''
-                . venv/bin/activate
+                echo 'Running tests...'
+                bat """
+                venv\\Scripts\\activate
                 pytest
-                '''
+                """
             }
         }
     }
